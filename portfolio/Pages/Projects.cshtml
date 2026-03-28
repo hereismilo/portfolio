@@ -1,5 +1,185 @@
 ﻿@page
 @model portfolio.Pages.ProjectsModel
+
 @{
     ViewData["Title"] = "Projects";
+
+    var projects = new[]
+    {
+        new
+        {
+            Title = "Drilling Project Milestone Tracker",
+            TechStack = "C#, Angular, .NET",
+            Timeline = "2023",
+            ImageUrl = "/images/drilling-image.png",
+            DescriptionPoints = new[]
+            {
+                "Built a complete .NET backend and Angular front-end architecture to track high-value drilling project milestones.",
+                "Demonstrated strong initiative and structured problem-solving skills, taking ownership of the technical stack.",
+                "Implemented secure REST APIs for seamless data synchronization between the UI and backend services."
+            }
+        },
+        new
+        {
+            Title = "Warehouse Management Application",
+            TechStack = ".NET, Razor Pages, SQL",
+            Timeline = "2024 (Self-Directed) / NISOC 2022",
+            ImageUrl = "/images/warehouse-image.png",
+            DescriptionPoints = new[]
+            {
+                "Designed and implemented a role-based access management system (RBAC) with secure CRUD functionality.",
+                "Integrated robust SQL databases to handle real-time inventory and logistics tracking.",
+                "Improved efficiency of store operations significantly by streamlining inventory audits and access controls."
+            }
+        },
+        new
+        {
+            Title = "Spam Review Detection",
+            TechStack = "Python, Machine Learning (ML)",
+            Timeline = "MSc Dissertation, 2023",
+            ImageUrl = "/images/spamdetection-image.png",
+            DescriptionPoints = new[]
+            {
+                "Developed an AI-driven model specifically designed to detect fraudulent e-commerce reviews.",
+                "Achieved 86% detection accuracy using advanced Natural Language Processing (NLP) techniques and experimentation.",
+                "Managed the full SDLC, from initial requirements gathering to model deployment and rigorous testing."
+            }
+        }
+    };
 }
+
+<style>
+    /* basic clean styling - integrate these into your main stylesheet */
+    .project-portfolio {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .project-card {
+        background: #fff;
+        border: 1px solid #eaeaea;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        margin-bottom: 40px;
+        overflow: hidden;
+        transition: transform 0.2s;
+    }
+
+    .project-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 0;
+    }
+
+    .project-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .project-content {
+        padding: 30px;
+    }
+
+    .project-header {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .project-title {
+        font-size: 1.6rem;
+        margin: 0 0 5px 0;
+        color: #333;
+    }
+
+    .project-meta {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+    }
+
+    .tech-stack {
+        display: inline-block;
+        background-color: #f0f0f0;
+        color: #444;
+        padding: 3px 8px;
+        border-radius: 4px;
+        margin-right: 10px;
+        font-weight: 600;
+    }
+
+    .project-details ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .project-details li {
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 12px;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    .project-details li::before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: #007bff; /* Example highlight color */
+        font-weight: bold;
+    }
+
+    @@media (max-width: 768px) {
+        .project-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .project-image-container img {
+            height: 250px; /* smaller fixed height on mobile */
+        }
+    }
+</style>
+
+<div class="project-portfolio">
+    <h1 class="mb-5">Featured Projects</h1>
+
+    @foreach (var project in projects)
+    {
+        <section class="project-card">
+            <div class="project-grid">
+                <div class="project-image-container">
+                    <img src="@project.ImageUrl" alt="Visual representation of the @project.Title" loading="lazy" />
+                </div>
+                
+                <div class="project-content">
+                    <header class="project-header">
+                        <h2 class="project-title">@project.Title</h2>
+                        <p class="project-meta">
+                            <span class="tech-stack">@project.TechStack</span> 
+                            <span class="timeline">@project.Timeline</span>
+                        </p>
+                    </header>
+                    
+                    <div class="project-details">
+                        <ul>
+                            @foreach (var point in project.DescriptionPoints)
+                            {
+                                <li>@point</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</div>
