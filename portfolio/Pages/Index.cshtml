@@ -4,15 +4,114 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1>Welcome to my portfolio!</h1>
-   <h3>Hi! I'm Milo...</h3>
-   <p>
-        Graduated with a Master's degree in Computer Software Engineering from Heriot-Watt University in May 2024. Currently contributing to Motorola Solutions as a Graduate Software Engineer.
+<style>
+    .hero-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 50px;
+        padding: 60px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        Equipped with a strong foundation in software infrastructure, test-driven development, and MS SQL, coupled with practical exposure through prior roles in software engineering and technology. Dedicated to leveraging advanced technical skills to support organizational goals.
-   </p>
-   <img src="/images/portfolio-img1.jpg" alt="Image couldn't be loaded" height="500"/>
+    .hero-content {
+        text-align: left;
+    }
 
-   
+    .hero-content h1 {
+        font-size: 1.2rem;
+        color: #007bff;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .hero-content h2 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #222;
+        margin-bottom: 20px;
+        line-height: 1.1;
+    }
+
+    .hero-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .hero-image-wrapper {
+        position: relative;
+    }
+
+    .hero-image-wrapper img {
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .hero-image-wrapper img:hover {
+        transform: scale(1.02);
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+
+    .cta-button:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+    @@media (max-width: 992px) {
+        .hero-container {
+            grid-template-columns: 1fr;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .hero-content {
+            text-align: center;
+            order: 2;
+        }
+        .hero-image-wrapper {
+            order: 1;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .hero-content h2 {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
+<div class="hero-container">
+    <div class="hero-content">
+        <h1>Welcome to my portfolio</h1>
+        <h2>Hi! I'm Milo.</h2>
+        <p>
+            Graduated with a Master's degree in <strong>Computer Software Engineering</strong> from Heriot-Watt University. 
+            Currently contributing to <strong>Motorola Solutions</strong> as a Graduate Software Engineer, 
+            focusing on infrastructure, TDD, and scalable MS SQL solutions.
+        </p>
+        <div class="hero-actions">
+            <a href="/Projects" class="cta-button">View My Work</a>
+        </div>
+    </div>
+
+    <div class="hero-image-wrapper">
+        <img src="/images/Milo.jpg" alt="Milo - Graduate Software Engineer" />
+    </div>
 </div>

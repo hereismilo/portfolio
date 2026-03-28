@@ -3,42 +3,148 @@
 @{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<div>
-    <h3>
-        Privacy Policy
-    </h3>
-    <h4>Last updated: 19/03/2026</h4>
-    <h5>The short version...</h5>
-    <p>I value your privacy as much as my own. This site is a portfolio designed to show my work, not to track you or sell your data.</p>
-    <ul>
-      <li>
-        <h5>Information Collection:</h5>
+<style>
+    .privacy-container {
+        max-width: 800px;
+        margin: 60px auto;
+        padding: 0 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .privacy-header {
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 20px;
+        margin-bottom: 40px;
+    }
+
+        .privacy-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+    .last-updated {
+        color: #888;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .short-version-box {
+        background-color: #f8fbff;
+        border-left: 4px solid #007bff;
+        padding: 25px;
+        margin-bottom: 40px;
+        border-radius: 0 8px 8px 0;
+    }
+
+        .short-version-box h2 {
+            font-size: 1.2rem;
+            color: #007bff;
+            margin-top: 0;
+        }
+
+    .policy-section {
+        margin-bottom: 35px;
+    }
+
+        .policy-section h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #222;
+            display: flex;
+            align-items: center;
+        }
+
+            .policy-section h3::before {
+                content: "";
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background: #007bff;
+                border-radius: 50%;
+                margin-right: 12px;
+            }
+
+    .sub-policy {
+        margin-left: 20px;
+        padding-left: 20px;
+        border-left: 1px solid #eee;
+        margin-top: 15px;
+    }
+
+    .contact-card {
+        background: #fdfdfd;
+        border: 1px solid #eaeaea;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        margin-top: 60px;
+    }
+
+    .contact-link {
+        color: #007bff;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+    }
+
+        .contact-link:hover {
+            border-color: #007bff;
+        }
+
+    @@media (max-width: 600px) {
+        .privacy-header h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<div class="privacy-container">
+    <header class="privacy-header">
+        <h1>@ViewData["Title"]</h1>
+        <span class="last-updated">Last updated: 19/03/2026</span>
+    </header>
+
+    <section class="short-version-box">
+        <h2>The short version...</h2>
+        <p>I value your privacy as much as my own. This site is a portfolio designed to showcase my work, not to track you or sell your data.</p>
+    </section>
+
+    <div class="policy-section">
+        <h3>Information Collection</h3>
         <p>I do not require users to register or provide personal information to view this site.</p>
+        
+        <div class="sub-policy">
+            <strong>Contact Form:</strong>
+            <p>If you choose to contact me, I will receive the information you provide (like your name and email) solely to respond to your inquiry.</p>
+        </div>
 
-        <ul>
-          <li>
-            <h6>Contact Form:</h6>
-            <p>If you choose to contact me via the form on this site, I will receive the information you provide (like your name and email) so that I can respond to you.</p>
-          </li>
-          <li>
-            <h6>Server Logs:</h6>
-            <p>Like most websites, my hosting provider may collect basic technical information (like your IP address) to ensure the site stays secure and functional.</p>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <h5>Cookies:</h5>
-            <p>I aim to keep this site cookie-free.</p>
-      </li>
-        <li>
-            <h5>Third-Party Links:</h5>
-            <p>My portfolio contains links to other sites (like LinkedIn or BitBucket). I am not responsible for the privacy practices of those external sites.</p>
-        </li>
-        <li>
-            <h5>Contact:</h5>
-            <p>If you have any questions about this, feel free to reach out at <a href="mailto:hereismilo@gmail.com">hereismilo@gmail.com</a>.</p>
-        </li>
-    </ul>
+        <div class="sub-policy">
+            <strong>Server Logs:</strong>
+            <p>Standard technical information (like IP addresses) may be collected by the hosting provider to maintain site security and functionality.</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h3>Cookies</h3>
+        <p>This site is designed to be cookie-free to ensure a private browsing experience.</p>
+    </div>
+
+    <div class="policy-section">
+        <h3>Third-Party Links</h3>
+        <p>This portfolio contains links to external platforms like <strong>LinkedIn</strong> and <strong>BitBucket</strong>. Please note that I am not responsible for the privacy practices of those external sites.</p>
+    </div>
+
+    <footer class="contact-card">
+        <h3>Questions?</h3>
+        <p>If you have any questions about this policy, please reach out directly at:</p>
+        <a href="mailto:hereismilo@gmail.com" class="contact-link">hereismilo@gmail.com</a>
+    </footer>
 </div>

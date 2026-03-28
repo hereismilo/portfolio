@@ -1,6 +1,214 @@
 ﻿@page
-@model portfolio.Pages.ContactModel
+@model ContactModel
 @{
     ViewData["Title"] = "Contact";
 }
-<h1>@ViewData["Title"]</h1>
+
+<style>
+    .contact-wrapper {
+        max-width: 1000px;
+        margin: 60px auto;
+        padding: 0 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 60px;
+        align-items: start;
+    }
+
+    .contact-info h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: #222;
+    }
+
+    .contact-info p {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 40px;
+    }
+
+    /* Info Cards */
+    .info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        transition: transform 0.2s;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .info-item:hover {
+        transform: translateX(10px);
+        background: #eef6ff;
+        color: #007bff;
+    }
+
+    .info-icon {
+        width: 45px;
+        height: 45px;
+        background: #007bff;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-weight: bold;
+    }
+
+    .info-text h4 {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #888;
+        text-transform: uppercase;
+    }
+
+    .info-text p {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    /* Form Styling */
+    .contact-form-container {
+        background: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        border: 1px solid #eaeaea;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #f0f0f0;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 14px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .btn-submit:hover {
+        background: #0056b3;
+    }
+
+    @@media (max-width: 850px) {
+        .contact-grid { grid-template-columns: 1fr; }
+        .contact-info { text-align: center; }
+        .info-item { justify-content: flex-start; text-align: left; }
+    }
+</style>
+
+<div class="contact-wrapper">
+    <div class="contact-grid">
+        
+        <div class="contact-info">
+            <h1>Let's Connect</h1>
+            <p>I'm currently open to networking, discussing software engineering opportunities, or collaborating on interesting projects.</p>
+
+            <a href="mailto:hereismilo@gmail.com" class="info-item">
+                <div class="info-icon">E</div>
+                <div class="info-text">
+                    <h4>Email</h4>
+                    <p>hereismilo@gmail.com</p>
+                </div>
+            </a>
+
+            <a href="https://linkedin.com/in/mrz1999" target="_blank" class="info-item">
+                <div class="info-icon">L</div>
+                <div class="info-text">
+                    <h4>LinkedIn</h4>
+                    <p>linkedin.com/in/mrz1999</p>
+                </div>
+            </a>
+
+            <a href="https://github.com/hereismilo" target="_blank" class="info-item">
+                <div class="info-icon">G</div>
+                <div class="info-text">
+                    <h4>GitHub</h4>
+                    <p>github.com/hereismilo</p>
+                </div>
+            </a>
+
+            <div class="info-item">
+                <div class="info-icon">L</div>
+                <div class="info-text">
+                    <h4>Location</h4>
+                    <p>Edinburgh, UK</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-container">
+            @* The action URL is your specific Formspree endpoint *@
+            <form action="https://formspree.io/f/xwvwvgpn" method="POST">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="John Doe" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="_replyto" class="form-control" placeholder="john@example.com" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text" name="subject" class="form-control" placeholder="Project Inquiry" required />
+                </div>
+                
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" class="form-control" placeholder="Hi Milo, I'd like to talk about..." required></textarea>
+                </div>
+
+                @* This hidden input tells Formspree where to send the user after they click submit *@
+                <input type="hidden" name="_next" value="https://yourdomain.com/Contact" />
+                
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+
+    </div>
+</div>
