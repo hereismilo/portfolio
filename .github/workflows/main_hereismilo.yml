@@ -14,7 +14,7 @@ permissions:
 env:
   AZURE_WEBAPP_NAME: hereismilo        # <-- set to your App Service name
   DOTNET_VERSION: '10.0.x'             # target .NET 10 SDK
-  PROJECT_PATH: '.'                    # folder containing the .sln or .csproj (relative to repo root). Update if needed.
+  PROJECT_PATH: 'portfolio'                    # folder containing the .sln or .csproj (relative to repo root). Update if needed.
 
 jobs:
   build:
