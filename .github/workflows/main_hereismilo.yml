@@ -61,8 +61,10 @@ jobs:
       
       - name: Build with dotnet
         run: |
+          cd portfolio
           dotnet build --configuration Release
-      
+
       - name: dotnet publish
         run: |
+          cd portfolio
           dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
