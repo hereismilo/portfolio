@@ -1,68 +1,354 @@
 ﻿@page
 @model ExperienceModel
-@{ ViewData["Title"] = "Experience"; }
+@{
+    ViewData["Title"] = "Professional Experience";
+}
+
 <style>
-    .resume-section { max-width: 1000px; margin: 60px auto; font-family: 'Segoe UI', sans-serif; }
-    .section-title { font-size: 2rem; font-weight: 800; color: #222; border-left: 5px solid #007bff; padding-left: 15px; }
-    .cv-download-btn { display: inline-flex; align-items: center; padding: 10px 20px; background-color: #fff; color: #007bff; border: 2px solid #007bff; border-radius: 8px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; }
-    .cv-download-btn:hover { background-color: #007bff; color: #fff; transform: translateY(-2px); }
-    .timeline { position: relative; padding-left: 30px; margin-top: 40px; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #e9ecef; }
-    .timeline-item { position: relative; margin-bottom: 50px; }
-    .timeline-item::before { content: ''; position: absolute; left: -36px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: #007bff; border: 3px solid #fff; box-shadow: 0 0 0 3px #007bff; }
-    .job-header { display: flex; justify-content: space-between; align-items: baseline; }
-    .job-title { font-size: 1.25rem; font-weight: 700; color: #333; margin: 0; }
-    .job-company { color: #007bff; font-weight: 600; }
-    .job-date { font-size: 0.9rem; color: #777; font-weight: 600; background: #f8f9fa; padding: 4px 12px; border-radius: 20px; }
-    .job-desc { list-style: none; padding: 0; margin: 15px 0 0 0; }
-    .job-desc li { position: relative; padding-left: 20px; margin-bottom: 8px; color: #555; }
-    .job-desc li::before { content: "→"; position: absolute; left: 0; color: #007bff; }
-    .edu-card { background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 30px; margin-top: 20px; }
-    .module-tag { display: inline-block; background: #eef6ff; color: #0056b3; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; margin: 4px; font-weight: 500; }
+    :root {
+        --primary: #007bff;
+        --dark: #222;
+        --grey: #777;
+        --bg-light: #f8f9fa;
+        --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .resume-section { max-width: 1100px; margin: 60px auto; font-family: 'Segoe UI', Roboto, sans-serif; padding: 0 20px; }
+    
+    .section-title { 
+        font-size: 2.2rem; 
+        font-weight: 800; 
+        color: var(--dark); 
+        border-left: 6px solid var(--primary); 
+        padding-left: 20px; 
+        margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+        color: var(--grey);
+        margin-bottom: 40px;
+        font-size: 1.1rem;
+        padding-left: 26px; 
+    }
+
+    .experience-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+    }
+
+
+    .exp-card {
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid #eee;
+        overflow: hidden;
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .exp-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 30px rgba(0,0,0,0.12);
+        border-color: var(--primary);
+    }
+
+    .card-image-wrapper {
+        width: 100%;
+        height: 180px;
+        background: #e9ecef;
+        overflow: hidden;
+    }
+
+    .card-image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .exp-card:hover .card-image-wrapper img {
+        transform: scale(1.05);
+    }
+
+    .card-body { 
+        padding: 20px; 
+        display: flex; 
+        flex-direction: column; 
+        flex-grow: 1; 
+    }
+    
+    .job-badge {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--primary);
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .job-main-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); }
+    .job-meta { font-size: 0.9rem; color: var(--grey); display: flex; justify-content: space-between; margin-bottom: 15px; }
+
+    .card-footer-cta {
+        margin-top: auto; 
+        padding-top: 15px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border-top: 1px dashed #eee;
+    }
+
+    .exp-card:hover .card-footer-cta {
+        gap: 10px;
+        transition: gap 0.3s ease;
+    }
+
+
+    .full-description { display: none; }
+
+
+    #card-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 9999;
+        display: none;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 40px 20px;
+    }
+
+    #card-overlay.active { display: flex; }
+
+    .expanded-container {
+        background: white;
+        width: 100%;
+        max-width: 850px;
+        border-radius: 24px;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        position: relative;
+        padding-bottom: 40px;
+        animation: modalSlideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    @@keyframes modalSlideUp {
+        from { transform: translateY(40px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-overlay-btn {
+        position: fixed;
+        top: 30px; right: 30px;
+        width: 50px; height: 50px;
+        background: var(--dark);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 10000;
+        transition: var(--transition);
+    }
+
+    .close-overlay-btn:hover { transform: rotate(90deg); background: var(--primary); }
+
+    .expanded-hero-img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 24px 24px 0 0;
+    }
+
+    .expanded-text-content { padding: 40px; }
+    
+    .job-desc-list { list-style: none; padding: 0; margin-top: 25px; }
+    .job-desc-list li { 
+        position: relative; 
+        padding-left: 30px; 
+        margin-bottom: 15px; 
+        font-size: 1.1rem; 
+        line-height: 1.6;
+        color: #444;
+    }
+    .job-desc-list li::before { 
+        content: '→'; 
+        position: absolute; 
+        left: 0; 
+        color: var(--primary); 
+        font-weight: bold; 
+    }
+
+    .cv-download-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 25px;
+        background: var(--primary);
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+    .cv-download-btn:hover { background: #0056b3; transform: translateY(-2px); color: white; }
+
+    .module-tag { 
+        display: inline-block; 
+        background: #eef6ff; 
+        color: #0056b3; 
+        padding: 6px 14px; 
+        border-radius: 8px; 
+        font-size: 0.9rem; 
+        margin: 5px; 
+        font-weight: 600; 
+    }
 </style>
 
 <div class="resume-section">
-    <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap">
-        <h2 class="section-title mb-0">Professional Experience</h2>
-        <a href="/files/CV.pdf" download class="cv-download-btn">Download Full CV</a>
+    <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
+        <h2 class="section-title mb-0">Experience & Education</h2>
+        <a href="/files/CV.pdf" download class="cv-download-btn">Download CV</a>
     </div>
+    <p class="section-subtitle">Click on any card to see expanded roles, responsibilities, and modules.</p>
 
-    <div class="timeline">
-        <div class="timeline-item">
-            <div class="job-header">
-                <div><h3 class="job-title">Graduate Software Engineer</h3><span class="job-company">Motorola Solutions (Avigilon Team)</span></div>
-                <span class="job-date">2024 – Present</span>
+    <div class="experience-grid">
+        <div class="exp-card" onclick="openExperience(this)">
+            <div class="card-image-wrapper">
+                <img src="~/images/motorola.jpg" alt="Motorola Solutions" onerror="this.src='https://placehold.co/600x400?text=Software+Engineering'">
             </div>
-            <ul class="job-desc">
-                <li>Architecting modular UI components in <strong>WPF</strong> using <strong>MVVM patterns</strong>.</li>
-                <li>Managing real-time device discovery via <strong>ONVIF-compliant</strong> hardware integration.</li>
-                <li>Integrating backend <strong>Tranquility APIs</strong> for video metadata processing.</li>
-                <li>Delivering features within an <strong>Agile</strong> framework.</li>
-            </ul>
-        </div>
-        <div class="timeline-item">
-            <div class="job-header">
-                <div><h3 class="job-title">Account Specialist II</h3><span class="job-company">Chase Bank</span></div>
-                <span class="job-date">Jun 2025 – Present</span>
-            </div>
-            <ul class="job-desc">
-                <li>Resolved 50+ complex queries daily under strict regulatory compliance.</li>
-                <li>Reduced complaints by 12% by identifying recurring billing issues.</li>
-            </ul>
-        </div>
-    </div>
+            <div class="card-body">
+                <span class="job-badge">Motorola Solutions</span>
+                <h3 class="job-main-title">Graduate Software Engineer</h3>
+                <div class="job-meta">
+                    <span>Avigilon Team</span>
+                    <span class="job-date">2025 – Present</span>
+                </div>
+                
+                <div class="card-footer-cta">
+                    View full responsibilities <span>&rarr;</span>
+                </div>
 
-    <h2 class="section-title" style="margin-top: 80px;">Education</h2>
-    <div class="edu-card">
-        <div class="job-header">
-            <div><h3 class="job-title">MSc Software Engineering</h3><span class="job-company">Heriot-Watt University</span></div>
-            <span class="job-date">2023 – 2024</span>
+                <div class="full-description">
+                    <ul class="job-desc-list">
+                        <li>Architecting modular UI components in <strong>WPF</strong> using <strong>MVVM patterns</strong>.</li>
+                        <li>Managing real-time device discovery via <strong>ONVIF-compliant</strong> hardware integration.</li>
+                        <li>Integrating backend <strong>Tranquility APIs</strong> for video metadata processing.</li>
+                        <li>Delivering features within an <strong>Agile</strong> framework.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <p class="mt-3"><strong>Dissertation:</strong> Spam Review Detection for E-Commerce (Python). 86% Accuracy.</p>
-        <div class="mt-2">
-            <span class="module-tag">Industrial Programming</span>
-            <span class="module-tag">Advanced Software Engineering</span>
-            <span class="module-tag">Distributed & Parallel Technologies</span>
+
+        <div class="exp-card" onclick="openExperience(this)">
+            <div class="card-image-wrapper">
+                <img src="~/images/chase.jpg" alt="Chase Bank" onerror="this.src='https://placehold.co/600x400?text=Fintech+Experience'">
+            </div>
+            <div class="card-body">
+                <span class="job-badge">Chase Bank</span>
+                <h3 class="job-main-title">Account Specialist II</h3>
+                <div class="job-meta">
+                    <span>Corporate Operations</span>
+                    <span class="job-date">2025</span>
+                </div>
+
+                <div class="card-footer-cta">
+                    View role details <span>&rarr;</span>
+                </div>
+
+                <div class="full-description">
+                    <ul class="job-desc-list">
+                        <li>Resolved 50+ complex queries daily under strict regulatory compliance.</li>
+                        <li>Reduced complaints by 12% by identifying recurring billing issues.</li>
+                        <li>Collaborated with technical teams to optimize internal CRM workflows.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="exp-card" onclick="openExperience(this)">
+            <div class="card-image-wrapper">
+                <img src="~/images/university.jpg" alt="Education" onerror="this.src='https://placehold.co/600x400?text=MSc+Software+Engineering'">
+            </div>
+            <div class="card-body">
+                <span class="job-badge">Heriot-Watt University</span>
+                <h3 class="job-main-title">MSc Software Engineering</h3>
+                <div class="job-meta">
+                    <span>Postgraduate Degree</span>
+                    <span class="job-date">2023 – 2024</span>
+                </div>
+
+                <div class="card-footer-cta">
+                    View modules & dissertation <span>&rarr;</span>
+                </div>
+
+                <div class="full-description">
+                    <p><strong>Dissertation:</strong> Spam Review Detection for E-Commerce (Python). 86% Accuracy.</p>
+                    <div class="mt-3">
+                        <span class="module-tag">Industrial Programming</span>
+                        <span class="module-tag">Advanced Software Engineering</span>
+                        <span class="module-tag">Distributed & Parallel Technologies</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<div id="card-overlay">
+    <div class="close-overlay-btn" onclick="closeExperience()">&times;</div>
+    <div id="modal-target" class="expanded-container">
+    </div>
+</div>
+
+<script>
+    function openExperience(card) {
+        const overlay = document.getElementById('card-overlay');
+        const target = document.getElementById('modal-target');
+        
+        const img = card.querySelector('img').src;
+        const badge = card.querySelector('.job-badge').innerText;
+        const title = card.querySelector('.job-main-title').innerText;
+        const meta = card.querySelector('.job-meta').innerHTML;
+        const desc = card.querySelector('.full-description').innerHTML;
+
+        target.innerHTML = `
+            <img src="${img}" class="expanded-hero-img">
+            <div class="expanded-text-content">
+                <span class="job-badge">${badge}</span>
+                <h2 style="font-weight:800; margin-bottom:10px;">${title}</h2>
+                <div class="job-meta" style="border-bottom: 1px solid #eee; padding-bottom: 20px;">${meta}</div>
+                <div style="margin-top: 30px;">${desc}</div>
+            </div>
+        `;
+
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeExperience() {
+        const overlay = document.getElementById('card-overlay');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function(event) {
+        const overlay = document.getElementById('card-overlay');
+        if (event.target == overlay) closeExperience();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") closeExperience();
+    });
+</script>

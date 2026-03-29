@@ -1,0 +1,207 @@
+﻿@page
+@model SkillsModel
+@{
+    ViewData["Title"] = "Skills & Hobbies";
+}
+
+<style>
+    :root {
+        --primary: #007bff;
+        --dark: #222;
+        --grey: #777;
+        --bg-light: #f8f9fa;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .skills-section { max-width: 1100px; margin: 60px auto; font-family: 'Segoe UI', Roboto, sans-serif; padding: 0 20px; }
+
+    .section-header { border-left: 6px solid var(--primary); padding-left: 20px; margin-bottom: 50px; }
+    .section-header h2 { font-size: 2.5rem; font-weight: 800; color: var(--dark); margin-bottom: 5px; }
+    .section-header p { color: var(--grey); font-size: 1.1rem; }
+
+    /* --- SKILLS GRID --- */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 80px;
+    }
+
+    .skill-category-card {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        border: 1px solid #eee;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .skill-category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+        border-color: var(--primary);
+    }
+
+    .category-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .pill-container { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .skill-pill {
+        background: #eef6ff;
+        color: var(--primary);
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+    .skill-pill:hover { background: var(--primary); color: #fff; }
+
+    /* --- HOBBIES SECTION --- */
+    .hobbies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 25px;
+    }
+
+    .hobby-card {
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        transition: var(--transition);
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .hobby-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .hobby-img-wrapper {
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+        background: #f0f0f0;
+    }
+
+    .hobby-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .hobby-card:hover img { transform: scale(1.1); }
+
+    .hobby-info { padding: 15px; }
+    .hobby-info h4 { margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--dark); }
+    .hobby-info p { margin: 8px 0 0; color: var(--grey); font-size: 0.9rem; line-height: 1.4; }
+
+    @@media (max-width: 768px) {
+        .section-header h2 { font-size: 2rem; }
+    }
+</style>
+
+<div class="skills-section">
+    <div class="section-header">
+        <h2>Technical Toolbox</h2>
+        <p>The languages and frameworks I use to build scalable solutions.</p>
+    </div>
+
+    <div class="skills-grid">
+        <div class="skill-category-card">
+            <div class="category-title"><span>💻</span> Languages</div>
+            <div class="pill-container">
+                <span class="skill-pill">C#</span>
+                <span class="skill-pill">Python</span>
+                <span class="skill-pill">SQL (T-SQL)</span>
+                <span class="skill-pill">JavaScript</span>
+                <span class="skill-pill">HTML5 / CSS3</span>
+            </div>
+        </div>
+
+        <div class="skill-category-card">
+            <div class="category-title"><span>🚀</span> Frameworks & Tech</div>
+            <div class="pill-container">
+                <span class="skill-pill">.NET 8 / ASP.NET Core</span>
+                <span class="skill-pill">WPF (MVVM)</span>
+                <span class="skill-pill">Angular</span>
+                <span class="skill-pill">Razor Pages</span>
+                <span class="skill-pill">Entity Framework</span>
+                <span class="skill-pill">REST APIs</span>
+            </div>
+        </div>
+
+        <div class="skill-category-card">
+            <div class="category-title"><span>🛠️</span> Engineering & Tools</div>
+            <div class="pill-container">
+                <span class="skill-pill">Git / GitHub</span>
+                <span class="skill-pill">TDD / Unit Testing</span>
+                <span class="skill-pill">Agile / Scrum</span>
+                <span class="skill-pill">Azure Cloud</span>
+                <span class="skill-pill">Docker</span>
+                <span class="skill-pill">Postman</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2>Beyond the Code</h2>
+        <p>A glimpse into what keeps me inspired outside of work.</p>
+    </div>
+
+    <div class="hobbies-grid">
+        <div class="hobby-card">
+            <div class="hobby-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=600" alt="Chess">
+            </div>
+            <div class="hobby-info">
+                <h4>Chess</h4>
+                <p>Strategic thinking and problem solving on the board.</p>
+            </div>
+        </div>
+
+        <div class="hobby-card">
+            <div class="hobby-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200" alt="Hiking">
+            </div>
+            <div class="hobby-info">
+                <h4>Hiking</h4>
+                <p>Exploring nature and finding the best viewpoints.</p>
+            </div>
+        </div>
+
+        <div class="hobby-card">
+            <div class="hobby-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600" alt="Video Games">
+            </div>
+            <div class="hobby-info">
+                <h4>Video Games</h4>
+                <p>Immersive storytelling and competitive strategy.</p>
+            </div>
+        </div>
+
+        <div class="hobby-card">
+            <div class="hobby-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=600" alt="Socialising">
+            </div>
+            <div class="hobby-info">
+                <h4>Socialising</h4>
+                <p>Connecting with friends and meeting people from diverse backgrounds.</p>
+            </div>
+        </div>
+    </div>
+</div>

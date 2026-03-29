@@ -33,7 +33,6 @@
         margin-bottom: 40px;
     }
 
-    /* Info Cards */
     .info-item {
         display: flex;
         align-items: center;
@@ -78,7 +77,6 @@
         font-size: 1rem;
     }
 
-    /* Form Styling */
     .contact-form-container {
         background: #fff;
         padding: 40px;
@@ -181,7 +179,6 @@
         </div>
 
         <div class="contact-form-container">
-            @* The action URL is your specific Formspree endpoint *@
             <form action="https://formspree.io/f/xwvwvgpn" method="POST">
                 <div class="form-group">
                     <label>Full Name</label>
@@ -202,8 +199,7 @@
                     <label>Message</label>
                     <textarea name="message" class="form-control" placeholder="Hi Milo, I'd like to talk about..." required></textarea>
                 </div>
-
-                @* This hidden input tells Formspree where to send the user after they click submit *@
+          
                 <input type="hidden" name="_next" value="https://yourdomain.com/Contact" />
                 
                 <button type="submit" class="btn-submit">Send Message</button>

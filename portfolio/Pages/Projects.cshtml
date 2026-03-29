@@ -8,10 +8,11 @@
     {
         new
         {
+            Id = "project1",
             Title = "Drilling Project Milestone Tracker",
             TechStack = "C#, Angular, .NET",
             Timeline = "2023",
-            ImageUrl = "/images/drilling-image.png",
+            ImageUrl = "/images/drilling-image.jpg",
             DescriptionPoints = new[]
             {
                 "Built a complete .NET backend and Angular front-end architecture to track high-value drilling project milestones.",
@@ -21,10 +22,11 @@
         },
         new
         {
+            Id = "project2",
             Title = "Warehouse Management Application",
             TechStack = ".NET, Razor Pages, SQL",
             Timeline = "2024 (Self-Directed) / NISOC 2022",
-            ImageUrl = "/images/warehouse-image.png",
+            ImageUrl = "/images/warehouse-image.jpg",
             DescriptionPoints = new[]
             {
                 "Designed and implemented a role-based access management system (RBAC) with secure CRUD functionality.",
@@ -34,10 +36,11 @@
         },
         new
         {
+            Id = "project3",
             Title = "Spam Review Detection",
             TechStack = "Python, Machine Learning (ML)",
             Timeline = "MSc Dissertation, 2023",
-            ImageUrl = "/images/spamdetection-image.png",
+            ImageUrl = "/images/spamdetection-image.jpg",
             DescriptionPoints = new[]
             {
                 "Developed an AI-driven model specifically designed to detect fraudulent e-commerce reviews.",
@@ -49,129 +52,157 @@
 }
 
 <style>
-    /* basic clean styling - integrate these into your main stylesheet */
-    .project-portfolio {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+    :root {
+        --accent: #007bff;
+        --text-main: #333;
+        --text-muted: #666;
+        --card-bg: #fff;
     }
 
+    .project-portfolio {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        max-width: 1200px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+
+    .page-header {
+        border-left: 6px solid var(--accent);
+        padding-left: 20px;
+        margin-bottom: 50px;
+    }
+
+    /* --- GRID SETUP --- */
+    .project-grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+    }
+
+    /* --- COMPACT CARD STYLE --- */
     .project-card {
-        background: #fff;
-        border: 1px solid #eaeaea;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        margin-bottom: 40px;
+        background: var(--card-bg);
+        border: 1px solid #eee;
+        border-radius: 15px;
         overflow: hidden;
-        transition: transform 0.2s;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .project-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border-color: var(--accent);
     }
 
-    .project-grid {
-        display: grid;
-        grid-template-columns: 350px 1fr;
-        gap: 0;
+    .card-img-box {
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+        background: #f0f0f0;
     }
 
-    .project-image-container img {
+    .card-img-box img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
+        transition: transform 0.5s ease;
     }
 
-    .project-content {
-        padding: 30px;
+    .project-card:hover .card-img-box img {
+        transform: scale(1.1);
     }
 
-    .project-header {
-        border-bottom: 1px solid #eee;
-        padding-bottom: 15px;
-        margin-bottom: 15px;
+    .card-info { padding: 25px; }
+    .card-title { font-size: 1.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 10px; }
+    .tech-pill { font-size: 0.8rem; background: #eef6ff; color: var(--accent); padding: 4px 12px; border-radius: 20px; font-weight: 600; display: inline-block; }
+
+    /* Hidden content used for Expanded view */
+    .hidden-description { display: none; }
+
+    /* --- EXPANDED VIEW OVERLAY --- */
+    #project-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(8px);
+        z-index: 2000;
+        display: none; /* toggled by JS */
+        justify-content: center;
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 60px 20px;
     }
 
-    .project-title {
-        font-size: 1.6rem;
-        margin: 0 0 5px 0;
+    #project-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+
+    .expanded-content {
+        background: white;
+        width: 100%;
+        max-width: 900px;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+        overflow: hidden;
+        animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .close-x {
+        position: fixed;
+        top: 25px; right: 30px;
+        font-size: 40px;
+        cursor: pointer;
         color: #333;
+        z-index: 2001;
+        transition: color 0.2s;
     }
+    .close-x:hover { color: var(--accent); transform: scale(1.1); }
 
-    .project-meta {
-        font-size: 0.9rem;
-        color: #666;
-        margin: 0;
-    }
+    .expanded-image { width: 100%; height: 400px; object-fit: cover; }
+    .expanded-body { padding: 40px; }
 
-    .tech-stack {
-        display: inline-block;
-        background-color: #f0f0f0;
-        color: #444;
-        padding: 3px 8px;
-        border-radius: 4px;
-        margin-right: 10px;
-        font-weight: 600;
+    .detail-list { list-style: none; padding: 0; margin-top: 20px; }
+    .detail-list li { 
+        position: relative; 
+        padding-left: 30px; 
+        margin-bottom: 15px; 
+        font-size: 1.1rem; 
+        line-height: 1.6; 
+        color: #444; 
     }
+    .detail-list li::before { content: "✔"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
 
-    .project-details ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .project-details li {
-        position: relative;
-        padding-left: 25px;
-        margin-bottom: 12px;
-        line-height: 1.6;
-        color: #555;
-    }
-
-    .project-details li::before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: #007bff; /* Example highlight color */
-        font-weight: bold;
-    }
+    @@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
     @@media (max-width: 768px) {
-        .project-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        .project-image-container img {
-            height: 250px; /* smaller fixed height on mobile */
-        }
+        .expanded-image { height: 250px; }
+        .expanded-body { padding: 25px; }
     }
 </style>
 
 <div class="project-portfolio">
-    <h1 class="mb-5">Featured Projects</h1>
+    <div class="page-header">
+        <h1 class="display-4 fw-bold">Featured Projects</h1>
+        <p class="text-muted">Click on a project to view technical details and milestones.</p>
+    </div>
 
-    @foreach (var project in projects)
-    {
-        <section class="project-card">
-            <div class="project-grid">
-                <div class="project-image-container">
-                    <img src="@project.ImageUrl" alt="Visual representation of the @project.Title" loading="lazy" />
+    <div class="project-grid-container">
+        @foreach (var project in projects)
+        {
+            <div class="project-card" onclick="expandProject(this)">
+                <div class="card-img-box">
+                    <img src="@project.ImageUrl" alt="@project.Title" onerror="this.src='https://placehold.co/600x400?text=Project+Preview'">
                 </div>
-                
-                <div class="project-content">
-                    <header class="project-header">
-                        <h2 class="project-title">@project.Title</h2>
-                        <p class="project-meta">
-                            <span class="tech-stack">@project.TechStack</span> 
-                            <span class="timeline">@project.Timeline</span>
-                        </p>
-                    </header>
+                <div class="card-info">
+                    <span class="tech-pill">@project.TechStack</span>
+                    <h3 class="card-title mt-2">@project.Title</h3>
+                    <p class="text-muted small mb-0">@project.Timeline</p>
                     
-                    <div class="project-details">
-                        <ul>
+                    <div class="hidden-description">
+                        <ul class="detail-list">
                             @foreach (var point in project.DescriptionPoints)
                             {
                                 <li>@point</li>
@@ -180,6 +211,53 @@
                     </div>
                 </div>
             </div>
-        </section>
-    }
+        }
+    </div>
 </div>
+
+<div id="project-overlay" onclick="handleOverlayClick(event)">
+    <span class="close-x" onclick="closeProject()">&times;</span>
+    <div id="project-target" class="expanded-content">
+        </div>
+</div>
+
+<script>
+    function expandProject(card) {
+        const overlay = document.getElementById('project-overlay');
+        const target = document.getElementById('project-target');
+        
+        const img = card.querySelector('img').src;
+        const title = card.querySelector('.card-title').innerText;
+        const tech = card.querySelector('.tech-pill').innerText;
+        const time = card.querySelector('.small').innerText;
+        const desc = card.querySelector('.hidden-description').innerHTML;
+
+        target.innerHTML = `
+            <img src="${img}" class="expanded-image">
+            <div class="expanded-body">
+                <span class="tech-pill">${tech}</span>
+                <h2 class="mt-2 fw-bold" style="font-size: 2.2rem;">${title}</h2>
+                <p class="text-muted">${time}</p>
+                <hr>
+                <div class="mt-4">${desc}</div>
+            </div>
+        `;
+
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeProject() {
+        const overlay = document.getElementById('project-overlay');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function handleOverlayClick(e) {
+        if (e.target.id === 'project-overlay') closeProject();
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") closeProject();
+    });
+</script>
