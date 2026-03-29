@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
 <style>
     .hero-container {
         display: grid;
@@ -46,18 +46,80 @@
 
     .hero-image-wrapper {
         position: relative;
+        perspective: 1000px;
+    }
+
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 4 / 5; 
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+    .flipped .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-front, .flip-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        overflow: hidden; 
+    }
+
+    .flip-back {
+        transform: rotateY(180deg);
     }
 
     .hero-image-wrapper img {
         width: 100%;
-        height: auto;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
+        height: 100%;
+        object-fit: cover; 
+        display: block;
     }
 
-    .hero-image-wrapper img:hover {
-        transform: scale(1.02);
+    .note-container {
+        position: absolute;
+        top: -60px;
+        right: -130px;
+        width: 120px;
+        height: auto;
+        pointer-events: none;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .handwritten-text {
+        font-family: 'Caveat', cursive;
+        font-size: 1.5rem;
+        color: #007bff;
+        transform: rotate(-3deg);
+        margin-bottom: 5px;
+    }
+
+    .pointer-arrow-svg {
+        width: 100px;
+        height: auto;
+        transform: rotate(10deg);
+    }
+
+    .pointer-arrow-svg path {
+        stroke: #007bff;
+        stroke-width: 3;
+        stroke-dasharray: 6 5;
+        stroke-linecap: round;
+        fill: none;
     }
 
     .cta-button {
@@ -89,7 +151,14 @@
         .hero-image-wrapper {
             order: 1;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 40px auto;
+        }
+        .note-container {
+            position: relative;
+            top: 0;
+            right: 0;
+            margin-bottom: 20px;
+            width: auto;
         }
         .hero-content h2 {
             font-size: 2.5rem;
@@ -112,6 +181,21 @@
     </div>
 
     <div class="hero-image-wrapper">
-        <img src="/images/Milo.jpg" alt="Milo - Graduate Software Engineer" />
+        <div class="note-container">
+            <div class="handwritten-text">all pictures have<br>two faces</div>
+            <svg class="pointer-arrow-svg" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+                <path d="M70,10 C 100,60, 10,100, 20,140" />
+                <path d="M12,130 L20,140 L30,135" stroke-dasharray="0"/>
+            </svg>
+        </div>
+
+        <div class="flip-card-inner" onclick="this.parentElement.classList.toggle('flipped')">
+            <div class="flip-front">
+                <img src="/images/photo1.jpg" alt="Milo - Front Face" />
+            </div>
+            <div class="flip-back">
+                <img src="/images/photo2.jpg" alt="Milo - Second Face" />
+            </div>
+        </div>
     </div>
 </div>
