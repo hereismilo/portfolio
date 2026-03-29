@@ -1,39 +1,61 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - hereismilo
+name: Build and deploy ASP.NET Core (Razor Pages) app to Azure Web App
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  AZURE_WEBAPP_NAME: hereismilo        # <-- set to your App Service name
+  DOTNET_VERSION: '10.0.x'             # target .NET 10 SDK
+  PROJECT_PATH: '.'                    # folder containing the .sln or .csproj (relative to repo root). Update if needed.
 
 jobs:
   build:
-    runs-on: windows-latest
-    permissions:
-      contents: read #This is required for actions/checkout
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up .NET Core
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: Restore
+        working-directory: ${{ env.PROJECT_PATH }}
+        run: dotnet restore
 
-      - name: Upload artifact for deployment job
+      - name: Build
+        working-directory: ${{ env.PROJECT_PATH }}
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        working-directory: ${{ env.PROJECT_PATH }}
+        run: dotnet publish -c Release -o ${{ github.workspace }}/publish --no-build
+
+      - name: Upload published artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: dotnet-app
+          path: ${{ github.workspace }}/publish
 
   deploy:
     runs-on: windows-latest
