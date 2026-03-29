@@ -83,13 +83,21 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dotnet-app
+          path: ${{ github.workspace }}/publish
+
+      # Optional: Azure service principal login (recommended for RBAC). Create AZURE_CREDENTIALS secret with `az ad sp create-for-rbac --sdk-auth`
+      - name: Azure Login (service principal)
+        if: ${{ secrets.AZURE_CREDENTIALS != '' }}
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
+        if: ${{ secrets.AZURE_CREDENTIALS != '' || secrets.AZURE_WEBAPP_PUBLISH_PROFILE != '' }}
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ github.workspace }}/publish
-      - name: Azure Login
-        uses: Azure/login@v3.0.0
+          # If you prefer publish-profile deployment (no service principal), add the secret AZURE_WEBAPP_PUBLISH_PROFILE
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
