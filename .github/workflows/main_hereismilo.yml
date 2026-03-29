@@ -6,10 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-# We define the path to your project once here to use below
-env:
-  PROJECT_PATH: 'portfolio/portfolio' 
-
 jobs:
   build:
     runs-on: windows-latest
@@ -22,15 +18,19 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x' # Using stable 8.0
+          dotnet-version: '8.x'
 
       - name: Build with dotnet
-        # FIXED: Added the path to your project folder
-        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release
+        # We move into the folder AND build in one step to avoid path errors
+        run: |
+          cd portfolio/portfolio
+          dotnet build --configuration Release
 
       - name: dotnet publish
-        # FIXED: Added the path to your project folder
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        # We move into the folder AND publish
+        run: |
+          cd portfolio/portfolio
+          dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-          path: ./publish # Explicit path for the download
+          path: ./publish # Keep this simple
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -65,5 +65,4 @@ jobs:
         with:
           app-name: 'hereismilo'
           slot-name: 'Production'
-          # FIXED: Pointing to the downloaded 'publish' folder
           package: ./publish
