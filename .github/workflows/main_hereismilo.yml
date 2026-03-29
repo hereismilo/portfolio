@@ -58,11 +58,11 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B3FE3A1758344B34B242549218D487E7 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_131929EEA80742359D0EC58D9F5EDAF3 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4B3C143A13C94697B5E09C46A8851B3D }}
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'hereismilo'
-          slot-name: 'Production'
-          package: ./publish
+      
+      - name: Build with dotnet
+        run: |
+          dotnet build --configuration Release
+      
+      - name: dotnet publish
+        run: |
+          dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
