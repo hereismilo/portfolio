@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy ASP.Net Core app to Azure Web App - hereismilo
 
 on:
@@ -9,11 +6,15 @@ on:
       - main
   workflow_dispatch:
 
+# We define the path to your project once here to use below
+env:
+  PROJECT_PATH: 'portfolio/portfolio' 
+
 jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -21,13 +22,15 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.x'
+          dotnet-version: '8.x' # Using stable 8.0
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        # FIXED: Added the path to your project folder
+        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        # FIXED: Added the path to your project folder
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -39,14 +42,15 @@ jobs:
     runs-on: windows-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write 
+      contents: read 
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+          path: ./publish # Explicit path for the download
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,5 +65,5 @@ jobs:
         with:
           app-name: 'hereismilo'
           slot-name: 'Production'
-          package: .
-          
+          # FIXED: Pointing to the downloaded 'publish' folder
+          package: ./publish
