@@ -1,7 +1,7 @@
 @page
 @model IndexModel
 @{
-    ViewData["Title"] = "Milo | Graduate Software Engineer";
+    ViewData["Title"] = "Milo | PL/SQL Developer at Avaloq";
 }
 
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
@@ -29,29 +29,29 @@
         text-align: left;
     }
 
-    .hero-content h1 {
-        font-size: 1.1rem;
-        color: var(--primary-blue);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
+        .hero-content h1 {
+            font-size: 1.1rem;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-    .hero-content h2 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        color: var(--dark-text);
-        margin-bottom: 20px;
-        line-height: 1.1;
-    }
+        .hero-content h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
 
-    .hero-content p {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: var(--light-text);
-        margin-bottom: 35px;
-    }
+        .hero-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--light-text);
+            margin-bottom: 35px;
+        }
 
     .cta-button {
         display: inline-block;
@@ -65,11 +65,11 @@
         box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
     }
 
-    .cta-button:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-        color: white;
-    }
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            color: white;
+        }
 
     /* Image & Flip Card Styling */
     .hero-image-wrapper {
@@ -81,7 +81,7 @@
     .flip-card-inner {
         position: relative;
         width: 100%;
-        aspect-ratio: 4 / 5; 
+        aspect-ratio: 4 / 5;
         transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         transform-style: preserve-3d;
         cursor: pointer;
@@ -102,7 +102,7 @@
         backface-visibility: hidden;
         border-radius: 24px;
         box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-        overflow: hidden; 
+        overflow: hidden;
     }
 
     .flip-back {
@@ -112,7 +112,7 @@
     .hero-image-wrapper img {
         width: 100%;
         height: 100%;
-        object-fit: cover; 
+        object-fit: cover;
         display: block;
     }
 
@@ -143,12 +143,12 @@
         margin-top: -10px;
     }
 
-    .pointer-arrow-svg path {
-        stroke: var(--primary-blue);
-        stroke-width: 2.5;
-        stroke-dasharray: 6 4;
-        fill: none;
-    }
+        .pointer-arrow-svg path {
+            stroke: var(--primary-blue);
+            stroke-width: 2.5;
+            stroke-dasharray: 6 4;
+            fill: none;
+        }
 
     /* MOBILE RESPONSIVENESS */
     @@media (max-width: 992px) {
@@ -163,9 +163,9 @@
             order: 2;
         }
 
-        .hero-content h2 {
-            font-size: 2.8rem;
-        }
+            .hero-content h2 {
+                font-size: 2.8rem;
+            }
 
         .hero-image-wrapper {
             order: 1;
@@ -186,8 +186,9 @@
 
     @@media (max-width: 480px) {
         .hero-image-wrapper {
-            max-width: 100%; 
+            max-width: 100%;
         }
+
         .hero-content h2 {
             font-size: 2.2rem;
         }
@@ -199,12 +200,12 @@
         <h1>Welcome to my portfolio</h1>
         <h2>Hi! I'm Milo.</h2>
         <p>
-            Graduated with a Master's degree in <strong>Computer Software Engineering</strong> from Heriot-Watt University. 
-            Currently a Graduate Software Engineer at <strong>Motorola Solutions</strong> (Avigilon Team), 
-            specializing in high-performance WPF architecture, ONVIF integrations, and TDD.
+            Graduated with a Master's degree in <strong>Computer Software Engineering</strong> from Heriot-Watt University.
+            Currently a <strong>PL/SQL Developer</strong> at <strong>Avaloq</strong> in Edinburgh,
+            focusing on database development, Oracle PL/SQL, performance tuning and Avaloq Core banking customisations.
         </p>
         <div class="hero-actions">
-            <a href="/Projects" class="cta-button">Explore My Work</a>
+            <a href="/Experience" class="cta-button">See my Experience</a>
         </div>
     </div>
 
@@ -213,16 +214,16 @@
             <div class="handwritten-text">all pictures have<br>two faces</div>
             <svg class="pointer-arrow-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <path d="M80,10 Q90,50 30,80" />
-                <path d="M40,70 L30,80 L45,85" stroke-dasharray="0"/>
+                <path d="M40,70 L30,80 L45,85" stroke-dasharray="0" />
             </svg>
         </div>
 
         <div class="flip-card-inner" onclick="toggleFlip()">
             <div class="flip-front">
-                <img src="/images/photo1.jpg" alt="Milo - Software Engineer" onerror="this.src='https://placehold.co/600x800?text=Milo+Front'"/>
+                <img src="~/images/photo1.jpg" alt="Milo - PL/SQL Developer" onerror="this.src='https://placehold.co/600x800?text=Milo+Front'" />
             </div>
             <div class="flip-back">
-                <img src="/images/photo2.jpg" alt="Milo - Software Engineer" onerror="this.src='https://placehold.co/600x800?text=Milo+Back'"/>
+                <img src="~/images/photo2.jpg" alt="Milo - PL/SQL Developer" onerror="this.src='https://placehold.co/600x800?text=Milo+Back'" />
             </div>
         </div>
     </div>
