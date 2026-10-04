@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model ExperienceModel
 @{
     ViewData["Title"] = "Professional Experience";
@@ -13,14 +13,19 @@
         --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
-    .resume-section { max-width: 1100px; margin: 60px auto; font-family: 'Segoe UI', Roboto, sans-serif; padding: 0 20px; }
-    
-    .section-title { 
-        font-size: 2.2rem; 
-        font-weight: 800; 
-        color: var(--dark); 
-        border-left: 6px solid var(--primary); 
-        padding-left: 20px; 
+    .resume-section {
+        max-width: 1280px; /* allow larger cards */
+        margin: 60px auto;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+        padding: 0 20px;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--dark);
+        border-left: 6px solid var(--primary);
+        padding-left: 20px;
         margin-bottom: 10px;
     }
 
@@ -28,15 +33,16 @@
         color: var(--grey);
         margin-bottom: 40px;
         font-size: 1.1rem;
-        padding-left: 26px; 
+        padding-left: 26px;
     }
 
+    /* Two larger cards per row */
     .experience-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(2, minmax(480px, 1fr)); /* two columns, each at least 480px */
+        gap: 30px;
+        justify-content: center;
     }
-
 
     .exp-card {
         background: #fff;
@@ -48,18 +54,20 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+        min-height: 440px; /* taller cards so text doesn't wrap awkwardly */
     }
 
     .exp-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 30px rgba(0,0,0,0.12);
+        box-shadow: 0 24px 40px rgba(0,0,0,0.12);
         border-color: var(--primary);
     }
 
+    /* Larger hero image area on cards */
     .card-image-wrapper {
         width: 100%;
-        height: 180px;
+        height: 260px; /* increased */
         background: #e9ecef;
         overflow: hidden;
     }
@@ -72,53 +80,69 @@
     }
 
     .exp-card:hover .card-image-wrapper img {
-        transform: scale(1.05);
+        transform: scale(1.03);
     }
 
-    .card-body { 
-        padding: 20px; 
-        display: flex; 
-        flex-direction: column; 
-        flex-grow: 1; 
+    .card-body {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
     }
-    
+
     .job-badge {
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         text-transform: uppercase;
         letter-spacing: 1px;
         color: var(--primary);
         font-weight: 700;
-        margin-bottom: 8px;
-        display: block;
+        margin-bottom: 6px;
+        display: inline-block;
     }
 
-    .job-main-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); }
-    .job-meta { font-size: 0.9rem; color: var(--grey); display: flex; justify-content: space-between; margin-bottom: 15px; }
+    .job-main-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--dark);
+    }
+
+    .job-meta {
+        font-size: 0.95rem;
+        color: var(--grey);
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        margin-bottom: 12px;
+    }
 
     .card-footer-cta {
-        margin-top: auto; 
+        margin-top: auto;
         padding-top: 15px;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         font-weight: 700;
         color: var(--primary);
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 8px;
         border-top: 1px dashed #eee;
     }
 
     .exp-card:hover .card-footer-cta {
-        gap: 10px;
-        transition: gap 0.3s ease;
+        gap: 12px;
     }
 
+    .full-description {
+        display: none;
+    }
 
-    .full-description { display: none; }
-
-
+    /* Overlay / expanded modal (unchanged essence but kept here for completeness) */
     #card-overlay {
         position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         z-index: 9999;
@@ -134,23 +158,25 @@
     .expanded-container {
         background: white;
         width: 100%;
-        max-width: 850px;
+        max-width: 900px;
         border-radius: 24px;
         box-shadow: 0 30px 60px rgba(0,0,0,0.15);
         position: relative;
         padding-bottom: 40px;
-        animation: modalSlideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        animation: modalSlideUp 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
     @@keyframes modalSlideUp {
         from { transform: translateY(40px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
+        to   { transform: translateY(0);     opacity: 1; }
     }
 
     .close-overlay-btn {
         position: fixed;
-        top: 30px; right: 30px;
-        width: 50px; height: 50px;
+        top: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
         background: var(--dark);
         color: white;
         border-radius: 50%;
@@ -163,56 +189,74 @@
         transition: var(--transition);
     }
 
-    .close-overlay-btn:hover { transform: rotate(90deg); background: var(--primary); }
+    .close-overlay-btn:hover {
+        transform: rotate(90deg);
+        background: var(--primary);
+    }
 
     .expanded-hero-img {
         width: 100%;
-        height: 350px;
+        height: 380px;
         object-fit: cover;
         border-radius: 24px 24px 0 0;
     }
 
     .expanded-text-content { padding: 40px; }
-    
+
     .job-desc-list { list-style: none; padding: 0; margin-top: 25px; }
-    .job-desc-list li { 
-        position: relative; 
-        padding-left: 30px; 
-        margin-bottom: 15px; 
-        font-size: 1.1rem; 
+    .job-desc-list li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
         line-height: 1.6;
         color: #444;
     }
-    .job-desc-list li::before { 
-        content: '→'; 
-        position: absolute; 
-        left: 0; 
-        color: var(--primary); 
-        font-weight: bold; 
+    .job-desc-list li::before {
+        content: '→'; position: absolute; left: 0; color: var(--primary); font-weight: bold;
     }
 
     .cv-download-btn {
-        display: inline-flex;
-        align-items: center;
-        padding: 12px 25px;
-        background: var(--primary);
-        color: white;
-        border-radius: 10px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: var(--transition);
+        display: inline-flex; align-items: center; padding: 12px 25px; background: var(--primary);
+        color: white; border-radius: 10px; text-decoration: none; font-weight: 600; transition: var(--transition);
     }
     .cv-download-btn:hover { background: #0056b3; transform: translateY(-2px); color: white; }
 
-    .module-tag { 
-        display: inline-block; 
-        background: #eef6ff; 
-        color: #0056b3; 
-        padding: 6px 14px; 
-        border-radius: 8px; 
-        font-size: 0.9rem; 
-        margin: 5px; 
-        font-weight: 600; 
+    .module-tag {
+        display: inline-block; background: #eef6ff; color: #0056b3; padding: 6px 14px; border-radius: 8px;
+        font-size: 0.9rem; margin: 5px; font-weight: 600;
+    }
+
+    /* Compact three-line card layout helpers (summary, dates, details) */
+    .card-summary {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 6px;
+        font-size: 1rem;
+    }
+
+    .card-dates { font-size: 0.95rem; color: var(--grey); margin-bottom: 10px; }
+    .card-details {
+        display: flex; justify-content: space-between; align-items: center; gap: 12px;
+        font-size: 0.98rem; color: var(--dark); margin-bottom: 12px;
+    }
+    .card-details .job-badge { display: inline-block; margin-right: 8px; }
+
+    /* Responsive: switch to single column on narrower screens */
+    @@media (max-width: 1100px) {
+        .experience-grid { grid-template-columns: 1fr; gap: 22px; padding: 0 10px; }
+        .exp-card { min-height: 380px; }
+        .card-image-wrapper { height: 220px; }
+    }
+
+    @@media (max-width: 600px) {
+        .card-summary { font-size: 0.98rem; }
+        .card-dates { font-size: 0.9rem; }
+        .card-details { font-size: 0.92rem; flex-direction: column; align-items: flex-start; gap: 6px; }
+        .card-image-wrapper { height: 200px; }
     }
 </style>
 
@@ -224,48 +268,80 @@
     <p class="section-subtitle">Click on any card to see expanded roles, responsibilities, and modules.</p>
 
     <div class="experience-grid">
+        <!-- Avaloq (first) -->
         <div class="exp-card" onclick="openExperience(this)">
             <div class="card-image-wrapper">
-                <img src="~/images/motorola.jpg" alt="Motorola Solutions" onerror="this.src='https://placehold.co/600x400?text=Software+Engineering'">
+                <img src="~/images/DevAtAvaloq.png" alt="Avaloq" onerror="this.src='https://placehold.co/600x400?text=Avaloq'">
             </div>
             <div class="card-body">
-                <span class="job-badge">Motorola Solutions</span>
-                <h3 class="job-main-title">Graduate Software Engineer</h3>
-                <div class="job-meta">
-                    <span>Avigilon Team</span>
-                    <span class="job-date">2025 – Present</span>
+                <div class="card-summary">PL/SQL & Avaloq Script Developer on the Avaloq Core Platform (ACP)</div>
+                <div class="card-dates">Aug 2026 – Present</div>
+                <div class="card-details">
+                    <div>
+                        <span class="job-badge">Avaloq</span>
+                        <h3 class="job-main-title">Software Developer – Avaloq</h3>
+                    </div>
+                    <div>Credit Team — Edinburgh</div>
                 </div>
-                
-                <div class="card-footer-cta">
-                    View full responsibilities <span>&rarr;</span>
-                </div>
+
+                <div class="card-footer-cta">View full responsibilities <span>&rarr;</span></div>
 
                 <div class="full-description">
                     <ul class="job-desc-list">
-                        <li>Architecting modular UI components in <strong>WPF</strong> using <strong>MVVM patterns</strong>.</li>
-                        <li>Managing real-time device discovery via <strong>ONVIF-compliant</strong> hardware integration.</li>
-                        <li>Integrating backend <strong>Tranquility APIs</strong> for video metadata processing.</li>
-                        <li>Delivering features within an <strong>Agile</strong> framework.</li>
+                        <li>Working on the Avaloq Core Platform (ACP) implementing PL/SQL and Avaloq Script customisations.</li>
+                        <li>Collaborating with multidisciplinary teams to deliver reliable, maintainable banking software solutions.</li>
+                        <li>Contributing to performance tuning, data migrations and integration testing for core banking flows.</li>
+                        <li>Currently progressing towards Avaloq Banking Role (ABR/S) certification.</li>
                     </ul>
                 </div>
             </div>
         </div>
 
+        <!-- Motorola Solutions (second) -->
+        <div class="exp-card" onclick="openExperience(this)">
+            <div class="card-image-wrapper">
+                <img src="~/images/motorola.jpg" alt="Motorola Solutions - Avigilon Control Centre" onerror="this.src='https://placehold.co/600x400?text=Motorola+Solutions'">
+            </div>
+            <div class="card-body">
+                <div class="card-summary">Worked on Avigilon Control Centre (ACC): camera management, telemetry & diagnostics</div>
+                <div class="card-dates">Nov 2025 – Jul 2026</div>
+                <div class="card-details">
+                    <div>
+                        <span class="job-badge">Motorola Solutions</span>
+                        <h3 class="job-main-title">Graduate Software Engineer</h3>
+                    </div>
+                    <div>Avigilon Control Centre — Edinburgh</div>
+                </div>
+
+                <div class="card-footer-cta">View role details <span>&rarr;</span></div>
+
+                <div class="full-description">
+                    <ul class="job-desc-list">
+                        <li>Developed firmware and backend components in C# and C++ for device telemetry and diagnostics.</li>
+                        <li>Used Wireshark and Postman to validate camera responses and REST API behaviour.</li>
+                        <li>Modified XAML UI files to implement UI changes and created unit tests to maintain quality.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chase Bank (third) -->
         <div class="exp-card" onclick="openExperience(this)">
             <div class="card-image-wrapper">
                 <img src="~/images/chase.jpg" alt="Chase Bank" onerror="this.src='https://placehold.co/600x400?text=Fintech+Experience'">
             </div>
             <div class="card-body">
-                <span class="job-badge">Chase Bank</span>
-                <h3 class="job-main-title">Account Specialist II</h3>
-                <div class="job-meta">
-                    <span>Corporate Operations</span>
-                    <span class="job-date">2025</span>
+                <div class="card-summary">Account Specialist II — corporate operations & customer resolution</div>
+                <div class="card-dates">2025</div>
+                <div class="card-details">
+                    <div>
+                        <span class="job-badge">Chase Bank</span>
+                        <h3 class="job-main-title">Account Specialist II</h3>
+                    </div>
+                    <div>Corporate Operations</div>
                 </div>
 
-                <div class="card-footer-cta">
-                    View role details <span>&rarr;</span>
-                </div>
+                <div class="card-footer-cta">View role details <span>&rarr;</span></div>
 
                 <div class="full-description">
                     <ul class="job-desc-list">
@@ -277,21 +353,23 @@
             </div>
         </div>
 
+        <!-- Heriot-Watt MSc (fourth) -->
         <div class="exp-card" onclick="openExperience(this)">
             <div class="card-image-wrapper">
-                <img src="~/images/university.jpg" alt="Education" onerror="this.src='https://placehold.co/600x400?text=MSc+Software+Engineering'">
+                <img src="~/images/university.jpg" alt="Heriot-Watt University" onerror="this.src='https://placehold.co/600x400?text=MSc+Software+Engineering'">
             </div>
             <div class="card-body">
-                <span class="job-badge">Heriot-Watt University</span>
-                <h3 class="job-main-title">MSc Software Engineering</h3>
-                <div class="job-meta">
-                    <span>Postgraduate Degree</span>
-                    <span class="job-date">2023 – 2024</span>
+                <div class="card-summary">MSc Software Engineering — dissertation on spam review detection</div>
+                <div class="card-dates">2023 – 2024</div>
+                <div class="card-details">
+                    <div>
+                        <span class="job-badge">Heriot-Watt University</span>
+                        <h3 class="job-main-title">MSc Software Engineering</h3>
+                    </div>
+                    <div>Postgraduate Degree</div>
                 </div>
 
-                <div class="card-footer-cta">
-                    View modules & dissertation <span>&rarr;</span>
-                </div>
+                <div class="card-footer-cta">View modules & dissertation <span>&rarr;</span></div>
 
                 <div class="full-description">
                     <p><strong>Dissertation:</strong> Spam Review Detection for E-Commerce (Python). 86% Accuracy.</p>
@@ -316,22 +394,42 @@
     function openExperience(card) {
         const overlay = document.getElementById('card-overlay');
         const target = document.getElementById('modal-target');
-        
-        const img = card.querySelector('img').src;
-        const badge = card.querySelector('.job-badge').innerText;
-        const title = card.querySelector('.job-main-title').innerText;
-        const meta = card.querySelector('.job-meta').innerHTML;
-        const desc = card.querySelector('.full-description').innerHTML;
+
+        const img = card.querySelector('img') ? card.querySelector('img').src : '';
+        const badge = card.querySelector('.job-badge') ? card.querySelector('.job-badge').innerText : '';
+        const title = card.querySelector('.job-main-title') ? card.querySelector('.job-main-title').innerText : '';
+        const dates = card.querySelector('.card-dates') ? card.querySelector('.card-dates').innerText.trim() : '';
+
+        // Extract product/team from the second child of .card-details if present
+        let team = '';
+        const detailsEl = card.querySelector('.card-details');
+        if (detailsEl) {
+            // prefer the second child (index 1) which in your markup holds product/team
+            if (detailsEl.children && detailsEl.children.length > 1) {
+                team = detailsEl.children[1].innerText.trim();
+            } else {
+                // fallback: use full text of .card-details minus badge/title
+                team = detailsEl.innerText.replace(badge, '').replace(title, '').trim();
+            }
+        }
+
+        const desc = card.querySelector('.full-description') ? card.querySelector('.full-description').innerHTML : '';
 
         target.innerHTML = `
-            <img src="${img}" class="expanded-hero-img">
-            <div class="expanded-text-content">
-                <span class="job-badge">${badge}</span>
-                <h2 style="font-weight:800; margin-bottom:10px;">${title}</h2>
-                <div class="job-meta" style="border-bottom: 1px solid #eee; padding-bottom: 20px;">${meta}</div>
-                <div style="margin-top: 30px;">${desc}</div>
-            </div>
-        `;
+                <img src="${img}" class="expanded-hero-img">
+                <div class="expanded-text-content">
+                    <span class="job-badge">${badge}</span>
+
+                    <!-- New ordered lines: Year, Position, Product/Team -->
+                    <div style="margin-top:12px; color:var(--grey); font-size:0.95rem;">${dates}</div>
+                    <div style="font-weight:800; font-size:1.4rem; margin-top:6px;">${title}</div>
+                    <div style="color:var(--dark); margin-top:6px; font-size:1rem;">${team}</div>
+
+                    <div style="border-top:1px solid #eee; padding-top:20px; margin-top:20px;">
+                        ${desc}
+                    </div>
+                </div>
+            `;
 
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
