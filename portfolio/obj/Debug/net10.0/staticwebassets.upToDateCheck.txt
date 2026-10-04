@@ -1,7 +1,9 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
 wwwroot\files\CV.pdf
+wwwroot\images\avaloq.png
 wwwroot\images\chase.jpg
+wwwroot\images\DevAtAvaloq.png
 wwwroot\images\drilling-image.jpg
 wwwroot\images\motorola.jpg
 wwwroot\images\photo1.jpg
